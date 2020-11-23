@@ -11,7 +11,7 @@ export class BilleteService {
   ) {}
 
   findAll(): Promise<Billete[]> {
-    return this.BilleteRepository.find();
+    return this.BilleteRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Billete: Billete): Promise<void> {

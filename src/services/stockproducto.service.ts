@@ -11,7 +11,7 @@ export class StockProductoService {
   ) {}
 
   findAll(): Promise<StockProducto[]> {
-    return this.StockProductoRepository.find();
+    return this.StockProductoRepository.find({ where: { Activo: 1 } });
   }
 
   async save(StockProducto: StockProducto): Promise<StockProducto> {

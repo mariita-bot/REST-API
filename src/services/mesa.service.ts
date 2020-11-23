@@ -11,7 +11,7 @@ export class MesasService {
   ) {}
 
   findAll(): Promise<Mesa[]> {
-    return this.MesasRepository.find();
+    return this.MesasRepository.find({ where: { Activo: 1 } });
   }
 
   async save(mesa: Mesa): Promise<void> {

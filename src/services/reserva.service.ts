@@ -11,7 +11,7 @@ export class ReservaService {
   ) {}
 
   findAll(): Promise<Reserva[]> {
-    return this.ReservaRepository.find();
+    return this.ReservaRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Reserva: Reserva): Promise<void> {

@@ -24,6 +24,9 @@ export class PedidoDetalle {
   @Column("datetime")
   Fecha: Date;
 
+  @Column({type: "tinyint", default: 1})
+  Activo: number;
+
   @ManyToOne(type => Pedido, pedido => pedido.PedidoDetalles)
   Pedido: Pedido;
 

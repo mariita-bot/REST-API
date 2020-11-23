@@ -14,6 +14,9 @@ export class Categoria {
   @Column()
   NombreCategoria: string;
 
+  @Column({type: "tinyint", default: 1})
+  Activo: number;
+
   @OneToMany(type => Producto, producto => producto.Categoria)
   Productos: Producto[]
 }

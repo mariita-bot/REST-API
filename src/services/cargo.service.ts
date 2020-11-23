@@ -11,7 +11,7 @@ export class CargoService {
   ) {}
 
   findAll(): Promise<Cargo[]> {
-    return this.CargoRepository.find();
+    return this.CargoRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Cargo: Cargo): Promise<void> {

@@ -11,7 +11,7 @@ export class ProveeProductoService {
   ) {}
 
   findAll(): Promise<any[]> {
-    return this.ProveeProductoRepository.find({ relations: ["Proveedor", "Producto"]});
+    return this.ProveeProductoRepository.find({ relations: ["Proveedor", "Producto"], where: { Activo: 1 } });
   }
 
   findAllAndProducto(): Promise<any[]> {

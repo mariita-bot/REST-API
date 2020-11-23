@@ -20,6 +20,9 @@ export class Proveedor {
     @Column()
     Telefono: string;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @OneToMany(type => ProveeProducto, proveeProducto => proveeProducto.Proveedor)
     ProveeProductos: ProveeProducto[];
 }

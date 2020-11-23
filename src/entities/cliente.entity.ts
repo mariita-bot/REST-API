@@ -22,6 +22,9 @@ export class Cliente {
   @Column({nullable: true})
   Cedula: string;
 
+  @Column({type: "tinyint", default: 1})
+  Activo: number;
+
   @OneToMany(type => Pedido, pedido => pedido.Cliente)
   Pedidos: Pedido[];
 

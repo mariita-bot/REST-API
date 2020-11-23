@@ -19,6 +19,9 @@ export class Flujodineroitem {
     @Column()
     Denominacion: number;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @ManyToOne(type => Flujodinero, flujodinero => flujodinero.Flujodineroitems)
     Flujodinero: Flujodinero;
 

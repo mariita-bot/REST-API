@@ -28,6 +28,9 @@ export class Empleado {
     @Column("tinyint")
     Estado: number;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @Column({nullable: true})
     Nombre_usuario: string
 

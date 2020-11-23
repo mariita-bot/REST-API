@@ -11,7 +11,7 @@ export class PedidoDetalleService {
   ) {}
 
   findAll(): Promise<PedidoDetalle[]> {
-    return this.PedidoDetalleRepository.find();
+    return this.PedidoDetalleRepository.find({ where: { Activo: 1 } });
   }
 
   async save(PedidoDetalle: PedidoDetalle): Promise<PedidoDetalle> {

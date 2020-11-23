@@ -23,6 +23,9 @@ export class Cajachica {
     @Column()
     CantidadDeCierre: number;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @OneToMany(type => Flujodinero, flujodinero => flujodinero.Cajachica)
     Flujodineros: Flujodinero[];
 }

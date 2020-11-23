@@ -11,7 +11,7 @@ export class PedidosService {
   ) {}
 
   findAll(): Promise<Pedido[]> {
-    return this.PedidosRepository.find();
+    return this.PedidosRepository.find({ where: { Activo: 1 } });
   }
 
   findWithDetalles(): Promise<any> {

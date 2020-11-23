@@ -17,6 +17,9 @@ export class Billete {
     @Column()
     Valor: number;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;    
+
     @OneToMany(type => Flujodineroitem, flujodineroitem => flujodineroitem.Billete)
     Flujodineroitems: Flujodineroitem[]
 }

@@ -11,7 +11,7 @@ export class EmpleadosService {
   ) {}
 
   findAll(): Promise<Empleado[]> {
-    return this.empleadosRepository.find();
+    return this.empleadosRepository.find({ where: { Activo: 1 } });
   }
 
   async save(empleado: Empleado): Promise<void> {

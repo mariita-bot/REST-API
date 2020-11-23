@@ -21,6 +21,9 @@ export class Mesa {
   @Column()
   Descripcion: string;
 
+  @Column({type: "tinyint", default: 1})
+  Activo: number;
+
   @OneToMany(type => Reserva, reserva => reserva.Mesa)
   Reservas: Reserva[];
 }

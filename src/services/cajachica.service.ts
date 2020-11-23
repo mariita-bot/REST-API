@@ -11,7 +11,7 @@ export class CajachicaService {
   ) {}
 
   findAll(): Promise<Cajachica[]> {
-    return this.CajachicaRepository.find();
+    return this.CajachicaRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Cajachica: Cajachica): Promise<void> {

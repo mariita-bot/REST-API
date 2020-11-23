@@ -11,7 +11,7 @@ export class FlujodineroService {
   ) {}
 
   findAll(): Promise<Flujodinero[]> {
-    return this.FlujodineroRepository.find();
+    return this.FlujodineroRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Flujodinero: Flujodinero): Promise<void> {

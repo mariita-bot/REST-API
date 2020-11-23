@@ -11,7 +11,7 @@ export class ClienteService {
   ) {}
 
   findAll(): Promise<Cliente[]> {
-    return this.ClienteRepository.find();
+    return this.ClienteRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Cliente: Cliente): Promise<void> {

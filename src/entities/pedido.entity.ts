@@ -24,6 +24,9 @@ export class Pedido {
     @Column()
     Observacion: string;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @OneToMany(type => PedidoDetalle, pedidoDetalle => pedidoDetalle.Pedido, { cascade: true, persistence: false})
     PedidoDetalles: PedidoDetalle[];
 

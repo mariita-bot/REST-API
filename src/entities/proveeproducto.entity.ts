@@ -29,6 +29,9 @@ export class ProveeProducto {
     @Column("float")
     MontoTotal: number;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @ManyToOne(type => Proveedor, proveedor => proveedor.ProveeProductos)
     Proveedor: Proveedor;
 

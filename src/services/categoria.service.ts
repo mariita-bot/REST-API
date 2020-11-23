@@ -11,7 +11,7 @@ export class CategoriaService {
   ) {}
 
   findAll(): Promise<Categoria[]> {
-    return this.CategoriaRepository.find();
+    return this.CategoriaRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Categoria: Categoria): Promise<void> {

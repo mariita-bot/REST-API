@@ -11,7 +11,7 @@ export class ProveedoresService {
   ) {}
 
   findAll(): Promise<Proveedor[]> {
-    return this.ProveedoresRepository.find();
+    return this.ProveedoresRepository.find({ where: { Activo: 1 } });
   }
 
   async save(Proveedor: Proveedor): Promise<void> {

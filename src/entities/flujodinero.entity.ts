@@ -32,6 +32,9 @@ export class Flujodinero {
     @Column()
     Observaciones: string
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @OneToMany(type => Pedido, pedido => pedido.Flujodinero)
     Pedidos: Pedido[];
 

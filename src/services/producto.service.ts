@@ -11,7 +11,7 @@ export class ProductosService {
   ) {}
 
   findAll(): Promise<Producto[]> {
-    return this.ProductosRepository.find();
+    return this.ProductosRepository.find({ where: { Activo: 1 } });
   }
 
   findWithStock(): Promise<any> {

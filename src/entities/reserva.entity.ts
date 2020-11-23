@@ -15,6 +15,9 @@ export class Reserva {
     @Column()
     Fecha: Date;
 
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
+
     @ManyToOne(type => Cliente, cliente => cliente.Reservas)
     Cliente: Cliente;
 

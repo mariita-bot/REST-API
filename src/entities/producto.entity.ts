@@ -30,6 +30,9 @@ export class Producto {
 
     @Column()
     Tamanio: number;
+
+    @Column({type: "tinyint", default: 1})
+    Activo: number;
     
     @OneToMany(type => PedidoDetalle, pedidoDetalle => pedidoDetalle.Producto)
     PedidoDetalles: PedidoDetalle[];
