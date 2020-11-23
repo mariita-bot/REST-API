@@ -3,6 +3,7 @@ import { Response, Request } from 'express';
 import { Producto } from '../entities/producto.entity';
 import { ProductosService } from '../services/producto.service';
 import { ProveeProductoService } from 'src/services/proveeproducto.service';
+import { CategoriaService } from 'src/services/categoria.service';
 
 // type ProductoEnd = { 
 //      [K in keyof Producto]: any,
@@ -14,7 +15,8 @@ export class ProductoController {
 
    constructor(
         private productosService: ProductosService,
-        private proveeProductoService: ProveeProductoService
+        private proveeProductoService: ProveeProductoService,
+        private categoriaService : CategoriaService 
      ){ }
 
 
@@ -55,7 +57,7 @@ export class ProductoController {
    }  
 
    @Post()
-   Crear(@Req() req: Request, @Res() res: Response) {
+   async Crear(@Req() req: Request, @Res() res: Response) {
         const prod = new Producto();
 
         const estado: number = (req.body["Estado"] === true) ? 1 : 0;
@@ -65,6 +67,12 @@ export class ProductoController {
         prod.PrecioVenta = req.body["PrecioVenta"];
         prod.Estado = estado;
         prod.Tamanio = req.body["Tamanio"]; //almacenar en ml
+
+        const Categoria = await this.categoriaService.findOne(req.body["IdCategoria"])
+
+        console.log(Categoria);
+
+        prod.Categoria = Categoria;
 
         this.productosService.save(prod);
         return res.status(HttpStatus.CREATED).json(prod);
