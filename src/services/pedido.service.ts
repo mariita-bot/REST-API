@@ -15,7 +15,7 @@ export class PedidosService {
   }
 
   findWithDetalles(): Promise<any> {
-    return this.PedidosRepository.find({relations: ['PedidoDetalles', 'PedidoDetalles.Producto']});
+    return this.PedidosRepository.find({relations: ['PedidoDetalles', 'PedidoDetalles.Producto', 'Cliente', 'Empleado' ]});
   }
 
   async save(Pedido: Pedido): Promise<Pedido> {

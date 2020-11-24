@@ -1,18 +1,33 @@
 import { Controller, Get, Put , HttpStatus, Res, Req, Post } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { MesasService } from '../services/mesa.service';
+import { EmpleadosService } from '../services/empleado.service';
 import { Mesa } from 'src/entities/mesa.entity';
 
 @Controller('api/mesa')
 export class MesaController {
 
-   constructor(private mesasService: MesasService){ }
+   constructor(private mesasService: MesasService , private empleadosService: EmpleadosService){ }
 
    @Get()
    findAll(@Res() res: Response) {
        this.mesasService.findAll().then(mesas => {
             res.status(HttpStatus.OK).json(mesas);
        });
+   }
+
+   @Get("mesasdisponibles")
+   findDisponibles (@Res() res: Response) {
+       this.mesasService.findDisponibles().then(mesas => {
+            res.status(HttpStatus.OK).json(mesas);
+       });
+   }
+
+   @Get("empleados") 
+   findEmpleados (@Res() res: Response) {
+     this.empleadosService.findAll().then (empleados => {
+          res.status(HttpStatus.OK).json(empleados);
+     })
    }
 
    @Put()

@@ -10,6 +10,8 @@ import { ProductosService } from 'src/services/producto.service';
 import { PedidoDetalleService } from 'src/services/pedidodetalle.service';
 import { ProveeProductoService } from 'src/services/proveeproducto.service';
 import { ProveeProducto } from 'src/entities/proveeproducto.entity';
+import { Cliente } from 'src/entities/cliente.entity';
+import { ClienteService } from 'src/services/cliente.service';
 
 @Controller('api/pedido')
 export class PedidoController {
@@ -20,12 +22,13 @@ export class PedidoController {
        private flujodineroService: FlujodineroService,
        private productoService: ProductosService,
        private pedidoDetalleService: PedidoDetalleService,
-       private proveeProductoService: ProveeProductoService
+       private proveeProductoService: ProveeProductoService,
+       private clienteService : ClienteService
        ){ }
 
    @Get()
-   findAll(@Res() res: Response) {
-       this.pedidosService.findWithDetalles().then(pedidos => {
+    async findAll(@Res() res: Response) {
+       await this.pedidosService.findWithDetalles().then(pedidos => {
         res.status(HttpStatus.OK).json(pedidos);
        });
    }
@@ -49,16 +52,28 @@ export class PedidoController {
 
    @Post()
    async Crear(@Req() req: Request, @Res() res: Response) {
+
+        const empleado = await this.empleadoService.findById(req.body['Mesero']);
+
+        const nuevoCliente = new Cliente();
+        nuevoCliente.Cedula = req.body['CedulaCliente'];
+        nuevoCliente.NombreCliente = req.body['NombreCliente'];
+        nuevoCliente.Telefono = req.body['TelefonoCliente'];
+        
+        await this.clienteService.save(nuevoCliente);
+        
         const pedido = new Pedido();
         pedido.MesaNumero = parseInt(req.body['NumMesa']);
         pedido.Estado = 0;
+        pedido.Empleado = empleado;
+        pedido.Cliente = nuevoCliente;
         pedido.Observacion = req.body['Observacion'];
 
         await this.pedidosService.save(pedido);
 
         let provProductos = await this.proveeProductoService.findAllAndProducto();
 
-        for(let element of req.body["productos"]){
+        /*for(let element of req.body["productos"]){
             let pedidoDetalle = new PedidoDetalle();
             let producto = await this.productoService.findOne(element.IdProducto);
 
@@ -91,6 +106,7 @@ export class PedidoController {
                 this.proveeProductoService.save(e);
             })
         }
+        */
         return res.status(HttpStatus.CREATED).json('CREATED');
    }
    

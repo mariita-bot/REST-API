@@ -15,6 +15,8 @@ export class ProveedorController {
        });
    }
 
+
+
    @Get(":id")
    async proveedorxId(@Param("id") id:string){
       const proveedor = await this.proveedoresService.findOne(Number(id));

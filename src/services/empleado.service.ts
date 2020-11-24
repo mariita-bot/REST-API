@@ -18,6 +18,14 @@ export class EmpleadosService {
     await this.empleadosRepository.save(empleado);
   }
 
+  findById (id) : Promise<Empleado> {
+    return this.empleadosRepository.findOne({
+      where: {
+        IdEmpleado : id
+      }
+    })
+  }
+
   findOne(username: string): Promise<Empleado | undefined> {
     return this.empleadosRepository.findOne(
       { 
