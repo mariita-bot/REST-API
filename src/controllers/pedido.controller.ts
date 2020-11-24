@@ -40,9 +40,9 @@ export class PedidoController {
        return res.status(HttpStatus.OK).json(pedidos);
    }
 
-   @Post('pagarPedido')
-   async pagarPedido(@Req() req: Request, @Res() res: Response) {
-       const pedido = await this.pedidosService.findOne(req.body['IdPedido']);
+   @Post('pagarpedido/:id')
+   async pagarPedido(@Param('id') id, @Req() req: Request, @Res() res: Response) {
+       const pedido = await this.pedidosService.findOne( parseInt(id) );
        pedido.Estado = 1;
        await this.pedidosService.save(pedido);
 
@@ -64,7 +64,7 @@ export class PedidoController {
         
         const pedido = new Pedido();
         pedido.MesaNumero = parseInt(req.body['NumMesa']);
-        pedido.Estado = 0;
+        pedido.Estado = req.body['Pagado'] ;
         pedido.Empleado = empleado;
         pedido.Cliente = nuevoCliente;
         pedido.Observacion = req.body['Observacion'];
@@ -72,8 +72,8 @@ export class PedidoController {
         await this.pedidosService.save(pedido);
 
         let provProductos = await this.proveeProductoService.findAllAndProducto();
-
-        /*for(let element of req.body["productos"]){
+        
+        for(let element of req.body["productos"]){
             let pedidoDetalle = new PedidoDetalle();
             let producto = await this.productoService.findOne(element.IdProducto);
 
@@ -81,12 +81,15 @@ export class PedidoController {
 
             pedidoDetalle.Cantidad = cant;
             pedidoDetalle.Fecha = new Date();
-            pedidoDetalle.Subtotal = (cant * element.PrecioVenta)
+            pedidoDetalle.Subtotal = (cant * element.PrecioVenta);
             pedidoDetalle.Producto = producto;
             pedidoDetalle.Pedido = pedido;
 
+            //console.log(pedidoDetalle);
+
             await this.pedidoDetalleService.save(pedidoDetalle);
 
+            /* no modificando stock temporalmente *********
             //Mostrar stock del producto a comprar
             let provProductosFiltered = provProductos.filter((el: any) => (el.Producto.IdProducto === element.IdProducto && el.Cantidad > 0));
 
@@ -107,6 +110,7 @@ export class PedidoController {
             })
         }
         */
+    }    
         return res.status(HttpStatus.CREATED).json('CREATED');
    }
    
