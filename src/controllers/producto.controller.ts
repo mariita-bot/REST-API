@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Res, Req, Post, Put, Param } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Res, Req, Post, Put, Param, Delete } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { Producto } from '../entities/producto.entity';
 import { ProductosService } from '../services/producto.service';
@@ -74,25 +74,36 @@ export class ProductoController {
 
         prod.Categoria = Categoria;
 
-        this.productosService.save(prod);
+        await this.productosService.save(prod);
         return res.status(HttpStatus.CREATED).json(prod);
    }
 
-   @Put()
-   async Actualizar(@Req() req: Request, @Res() res: Response) {
+    @Put(":id")
+    async Actualizar(@Param("id") id:string , @Req() req: Request, @Res() res: Response) {
 
-          const prod = await this.productosService.findOne(req.body["IdProducto"])
+        const prod = await this.productosService.findOne(Number(id))
 
-          const estado = (req.body["Estado"] === true) ? 1 : 0;
+        const estado = (req.body["Estado"] === true) ? 1 : 0;
 
-          prod.NombreProducto = req.body["NombreProducto"];
-          prod.Descripcion = req.body["Descripcion"];
-          prod.PrecioVenta = req.body["PrecioVenta"];
-          prod.Estado = estado;
-          prod.Tamanio = req.body["Tamanio"];
+        prod.NombreProducto = req.body["NombreProducto"];
+        prod.Descripcion = req.body["Descripcion"];
+        prod.PrecioVenta = req.body["PrecioVenta"];
+        prod.Estado = estado;
+        prod.Tamanio = req.body["Tamanio"];
 
-          this.productosService.save(prod);
+        await this.productosService.save(prod);
 
-          return res.status(HttpStatus.OK).json(prod);
+        return res.status(HttpStatus.OK).json(prod);
    }
+
+    @Delete(":id")
+    async Borrar (@Param("id") id:string , @Req() req: Request, @Res() res: Response ) { 
+
+       
+        const producto = await this.productosService.findOne(Number(id));
+        producto.Activo = 0;
+        await this.productosService.save(producto);
+
+        return res.status(HttpStatus.OK).json(producto);
+    }
 } 

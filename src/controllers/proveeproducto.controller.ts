@@ -19,8 +19,8 @@ export class ProveeProductoController {
    ){ }
 
    @Get()
-   findAll(@Res() res: Response) {
-       this.proveeProductoService.findAll().then(proveeproducto => {
+   async findAll(@Res() res: Response) {
+       await this.proveeProductoService.findAll().then(proveeproducto => {
             res.status(HttpStatus.OK).json(proveeproducto);
        });
    }
@@ -68,7 +68,7 @@ export class ProveeProductoController {
           prove.Producto = producto;
           prove.Proveedor = proveedor;       
           
-          this.proveeProductoService.save(prove);
+          await this.proveeProductoService.save(prove);
 
           return res.status(HttpStatus.OK).json(prove);
    }

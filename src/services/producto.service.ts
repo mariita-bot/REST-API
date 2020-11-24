@@ -15,7 +15,7 @@ export class ProductosService {
   }
 
   findWithStock(): Promise<any> {
-    return this.ProductosRepository.find({relations: ["ProveeProductos","ProveeProductos.Proveedor","Categoria"]});
+    return this.ProductosRepository.find({ where: { Activo: 1} , relations: ["ProveeProductos","ProveeProductos.Proveedor","Categoria"]});
   }
 
   async save(producto: Producto): Promise<void> {
